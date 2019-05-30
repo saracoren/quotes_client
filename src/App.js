@@ -19,7 +19,7 @@ class App extends React.Component {
 		this.getQuotes()
 	}
 	getQuotes () {
-		fetch('http://localhost:3000/quotes')
+		fetch('https://quotes-api.herokuapp.com/quotes')
 			.then(response => response.json())
 			.then(json => this.setState({quotes: json}))
       .catch(error => console.error(error))
@@ -47,7 +47,7 @@ class App extends React.Component {
    .catch(error => console.log(error))
   }
   handleDelete (deletedQuote) {
-    fetch(`/quotes/${deletedQuote.id}`, {
+    fetch(`https://quotes-api.herokuapp.com/quotes/${deletedQuote.id}`, {
        method: 'DELETE',
        headers: {
          'Accept': 'application/json, text/plain, */*',
@@ -67,7 +67,7 @@ class App extends React.Component {
   handleUpdate (event, formInputs) {
     event.preventDefault()
     console.log('testing')
-    fetch(`/quotes/${formInputs.id}`, {
+    fetch(`https://quotes-api.herokuapp.com/quotes/${formInputs.id}`, {
       body: JSON.stringify(formInputs),
       method: 'PUT',
    headers: {
