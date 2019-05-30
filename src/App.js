@@ -13,6 +13,7 @@ class App extends React.Component {
     this.getQuotes = this.getQuotes.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
 	}
 	componentDidMount() {
 		this.getQuotes()
@@ -63,6 +64,22 @@ class App extends React.Component {
    })
    .catch(error => console.log(error))
   }
+  handleUpdate (event, formInputs) {
+    event.preventDefault()
+    console.log('testing')
+    fetch(`/quotes/${formInputs.id}`, {
+      body: JSON.stringify(formInputs),
+      method: 'PUT',
+   headers: {
+     'Accept': 'application/json, text/plain, */*',
+     'Content-Type': 'application/json'
+   }
+  })
+   .then(updatedQuote => {
+     this.getQuotes()
+   })
+   .catch(error => console.log(error))
+  }
   render () {
     return (
       <div className = "container">
@@ -71,7 +88,8 @@ class App extends React.Component {
         handleSubmit={this.handleAdd} 
         />
         <Quotes quotes ={this.state.quotes} 
-        handleDelete={this.handleDelete}/>
+        handleDelete={this.handleDelete}
+        handleUpdate={this.handleUpdate}/>
       </div>
     )
   }

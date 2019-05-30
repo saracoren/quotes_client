@@ -36,19 +36,21 @@ class Form extends React.Component {
         phrase: '',
         author: ''
       })
-    //   if(this.props.notice) {
-    //     this.props.toggleForm()
-    //   }
+      if(this.props.quote) {
+        this.props.toggleForm()
+      } 
     }
     render () {
       return (
         <form onSubmit={this.handleSubmit}>
-        <h4>Add a New Quote:</h4>
+        <div>
+        {this.props.quote ? <h4>Edit this Quote:</h4> : <h4>Add a New Quote:</h4>}
+        </div>
         <label htmlFor= "phrase"></label>
         <input type="text" id="phrase" name="phrase" onChange={this.handleChange} value={this.state.phrase} placeholder="Quote"/>
         <label htmlFor= "author"></label>
         <input type="text" id="author" name="author" onChange={this.handleChange} value={this.state.author} placeholder="Author"/> 
-        <input type='submit' value={this.props.notice}/>
+        <input type='submit' value={this.props.quote ? "update this quote" : "add a quote"}/>
         </form>
       )
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import Quote from './Quote.js'
 
 function Quotes(props) {
-  const { quotes, handleDelete } = props
+  const { quotes, handleDelete, handleUpdate } = props
 //   const cheese = props.cheese
 return (
 <div>
@@ -10,6 +10,7 @@ return (
       return (
         <Quote key={quote.id} quote={quote}
         handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
         />
       )
     })}
