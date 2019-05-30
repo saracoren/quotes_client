@@ -1,4 +1,7 @@
 import React from 'react';
+import Header from './components/Header.js';
+import Form from './components/Form.js';
+import Quotes from './components/Quotes.js';
 import './App.css';
 
 class App extends React.Component {
@@ -7,6 +10,9 @@ class App extends React.Component {
 		this.state = {
 			quotes: []
     }
+    this.getQuotes = this.getQuotes.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
 	}
 	componentDidMount() {
 		this.getQuotes()
@@ -16,19 +22,56 @@ class App extends React.Component {
 			.then(response => response.json())
 			.then(json => this.setState({quotes: json}))
       .catch(error => console.error(error))
-	}
+  }
+  handleAdd (event, formInputs) {
+    // event.preventDefault()
+    fetch('/quotes', {
+      body: JSON.stringify(formInputs),
+      method: 'POST',
+   headers: {
+     'Accept': 'application/json, text/plain, */*',
+     'Content-Type': 'application/json'
+   }
+  })
+   .then(createdQuote => {
+     return createdQuote.json()
+   })
+   .then(jsonedQuote => {
+     // reset the form
+     // add quote to quotes
+     this.setState({
+       quotes: [jsonedQuote, ...this.state.quotes]
+     })
+   })
+   .catch(error => console.log(error))
+  }
+  handleDelete (deletedQuote) {
+    fetch(`/quotes/${deletedQuote.id}`, {
+       method: 'DELETE',
+       headers: {
+         'Accept': 'application/json, text/plain, */*',
+         'Content-Type': 'application/json'
+       }
+     })
+   .then(json => {
+     this.setState(state => {
+       const quotes = state.quotes.filter((quote, index) => quote.id !== deletedQuote.id)
+       return {
+         quotes
+       }
+     })
+   })
+   .catch(error => console.log(error))
+  }
   render () {
     return (
       <div className = "container">
-        <h1> Notable Quotables</h1>
-    {this.state.quotes.map ( quote => {
-      return (
-        <div className='quotes' key={quote.id}>
-          <h3>Quote: {quote.phrase}</h3>
-          <h3>Author: {quote.author}</h3>
-        </div>
-      )
-    })}
+        <Header />
+        <Form 
+        handleSubmit={this.handleAdd} 
+        />
+        <Quotes quotes ={this.state.quotes} 
+        handleDelete={this.handleDelete}/>
       </div>
     )
   }
