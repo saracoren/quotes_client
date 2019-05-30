@@ -26,7 +26,7 @@ class App extends React.Component {
   }
   handleAdd (event, formInputs) {
     // event.preventDefault()
-    fetch('/quotes', {
+    fetch('https://quotes-api.herokuapp.com/quotes', {
       body: JSON.stringify(formInputs),
       method: 'POST',
    headers: {
