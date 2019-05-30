@@ -47,9 +47,9 @@ class Form extends React.Component {
         {this.props.quote ? <h4>Edit this Quote:</h4> : <h4>Add a New Quote:</h4>}
         </div>
         <label htmlFor= "phrase"></label>
-        <input type="text" id="phrase" name="phrase" onChange={this.handleChange} value={this.state.phrase} placeholder="Quote"/>
+        <input type="text" id="phrase" name="phrase" onChange={this.handleChange} defaultValue={this.state.phrase} placeholder="Quote"/>
         <label htmlFor= "author"></label>
-        <input type="text" id="author" name="author" onChange={this.handleChange} value={this.state.author} placeholder="Author"/> 
+        <input type="text" id="author" name="author" onChange={this.handleChange} defaultValue={this.state.author} placeholder="Author"/> 
         <input type='submit' value={this.props.quote ? "update this quote" : "add a quote"}/>
         </form>
       )
